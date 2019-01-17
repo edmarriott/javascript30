@@ -95,7 +95,65 @@
 		</div>
 	</div>
 
-<script>
-</script>
+	<script>
+		/*
+		const inputs = Array.from(document.querySelectorAll('.item input'));
+		let lastChecked = -1;
+		let holdingShift = false;
+
+		inputs.forEach((input, index) => {
+			input.addEventListener('click', function() {
+				if (this.checked) {
+					if (holdingShift && lastChecked >= 0) {
+						if (index > lastChecked) {
+							for (let i = lastChecked; i < index; i++) {
+								inputs[i].checked = true;
+							}
+						} else {
+							for (let i = lastChecked; i > index; i--) {
+								inputs[i].checked = true;
+							}
+						}
+					}
+
+					lastChecked = index;
+				}
+			});
+		});
+
+		window.addEventListener('keydown', function(e) {
+			if (e.keyCode === 16) {
+				holdingShift = true;
+			}
+		});
+
+		window.addEventListener('keyup', function() {
+			holdingShift = false;
+		});
+		*/
+
+		const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+
+		let lastChecked;
+
+		function handleCheck(e) {
+			let inBetween = false;
+			if (e.shiftKey && this.checked) {
+				checkboxes.forEach(checkbox => {
+					if (checkbox === this || checkbox === lastChecked) {
+						inBetween = !inBetween;
+					}
+
+					if (inBetween) {
+						checkbox.checked = true;
+					}
+				})
+			}
+
+			lastChecked = this;
+		}
+
+		checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+	</script>
 </body>
 </html>
