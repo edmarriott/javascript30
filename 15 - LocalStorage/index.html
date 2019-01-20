@@ -23,11 +23,15 @@
 			<input type="text" name="item" placeholder="Item Name" required>
 			<input type="submit" value="+ Add Item">
 		</form>
+		<button type="button" class="button" name="clearAll">Clear All</button>
+		<button type="button" class="button" name="checkAll">Check All</button>
+		<button type="button" class="button" name="uncheckAll">Uncheck All</button>
 	</div>
 
 	<script>
 		const addItems = document.querySelector('.add-items');
 		const itemsList = document.querySelector('.plates');
+		const buttons = document.querySelectorAll('.button');
 		const items = JSON.parse(localStorage.getItem('items')) || [];
 
 		function addItem(e) {
@@ -64,8 +68,23 @@
 			populateList(items, itemsList);
 		}
 
+		function handleButton() {
+			const action = this.name;
+			if (action === 'clearAll') {
+				items.splice(0, items.length);
+			} else {
+				items.forEach(item => item.done = (action === 'checkAll') ? true : false);
+			}
+			localStorage.setItem('items', JSON.stringify(items));
+			populateList(items, itemsList);
+		}
+
 		addItems.addEventListener('submit', addItem);
 		itemsList.addEventListener('click', toggleDone);
+
+		buttons.forEach(button => {
+			button.addEventListener('click', handleButton);
+		});
 
 		populateList(items, itemsList);
 	</script>
