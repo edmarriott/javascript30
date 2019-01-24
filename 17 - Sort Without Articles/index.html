@@ -40,16 +40,44 @@
 			color: #ffc600;
 			text-decoration: none;
 		}
-
 	</style>
 
 	<ul id="bands"></ul>
 
-<script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+	<script>
+		const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
+		// my attempt
+		/*const ul = document.querySelector('#bands');
 
-</script>
+		bands.sort((a, b) => {
+			const regex = new RegExp(/^(The|An|A)\s+/);
+			console.log(a.replace(regex, ''));
+			return a.replace(regex, '') > b.replace(regex, '') ? 1 : -1;
+		});
+
+		const html = bands.map(band => {
+			return `
+				<li>
+					${band}
+				</li>
+			`;
+		}).join('');
+		
+		ul.innerHTML = html; */
+
+		// answer
+		function strip(bandName) {
+			return bandName.replace(/^(a |the |an )/i, '').trim();
+		}
+
+		const sortedBands = bands.sort((a, b) => strip(a) > strip(b) ? 1 : -1);
+
+		document.querySelector('#bands').innerHTML = 
+			sortedBands
+				.map(band => `<li>${band}</li>`)
+				.join('');
+	</script>
 
 </body>
 </html>
